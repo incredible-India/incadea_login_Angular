@@ -1,26 +1,35 @@
 <div class="container mt-3 shadow-lg border border-bottom" style="width:400px">
 
-    <form #basic="ngForm"    (ngSubmit) = "getFormData(basic.value)" >
+    <form   [formGroup]="loginform" (ngSubmit) = "login()"  >
+      
+      <!-- if user got any error  -->
+{{error}}
+      <p class="text-danger" *ngIf="error"><b>{{errorMessage}}</b></p>
+
+
 
       <div class="container mx-auto " >
         <label for="username">User Name</label>
-        <input type="text" name="username" id="username" ngModel  class="form-control" #username (blur)="getusername(username.value)">
+        <input type="text"  class="form-control"  formControlName="username" >
+        <span class="text-danger" *ngIf="username && username.invalid && username.touched" >Invalid User Name</span>
       </div>
 
 
       <div class="container">
         <label for="Password">Password</label>
-        <input type="password" name="password" id="Password" ngModel  class="form-control" #password (blur)="getpassword(password.value)">
+        <input type="password"   class="form-control" formControlName="password" >
+        <span class="text-danger" *ngIf="password && password.invalid && password.touched"  >Invalid Password</span>
       </div>
 
 
       <div class="container">
         <label for="dcode">Dealer Code</label>
-        <input type="text" name="dcode" id="dcode" ngModel  class="form-control" #dcode (blur)="getdcode(dcode.value)">
+        <input type="text"   class="form-control" formControlName="dcode">
+        <span class="text-danger" *ngIf="dcode && dcode.invalid && dcode.touched" >Invalid Dealer Code</span>
       </div>
 
 
-<input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="disabled">
+<input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="loginform.invalid">
 
     </form>
 

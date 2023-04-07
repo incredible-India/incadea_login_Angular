@@ -1,0 +1,32 @@
+{
+
+    "Employee":
+        [
+
+            {
+                "Username" : "himanshu399231@gmail.com",
+                "Password" : "112345678@hi",
+                "Dcode" : "1",
+                "Name": "Himanshu Kumar Sharma"
+            
+            
+            
+            },
+
+
+                
+
+
+                {
+                    "Username" : "kiran123@gmail.com",
+                    "Password" : "11234567@tr",
+                    "Dcode" : "2",
+                    "Name": "T R Kiran"
+                }
+        ]
+
+
+    
+
+
+}

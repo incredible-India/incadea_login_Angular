@@ -6,6 +6,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IncHeaderComponent } from './inc-header/inc-header.component';
 import {UserloginModule} from "./userlogin/userlogin.module"
 import { LoginComponent } from './userlogin/login/login.component';
+import {ReactiveFormsModule,FormsModule} from "@angular/forms"
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,6 +17,8 @@ import { LoginComponent } from './userlogin/login/login.component';
     BrowserModule,
     NgbModule,
     UserloginModule,
+    ReactiveFormsModule,
+ 
 
   ],
 

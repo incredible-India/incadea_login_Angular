@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import {NgForm} from "@angular/forms"
+
+import { FormGroup,FormControl,Validators } from '@angular/forms';
+
+//this json file contain the user information
+import data from  "../../../assets/Employee.json";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,64 +13,100 @@ import {NgForm} from "@angular/forms"
 
 
 export class LoginComponent {
-  disabled =true
 
-  username=""
-  password = ""
-  dcode = ''
+  error:boolean = false;
+  errorMessage:string | null = null; 
 
-  //cheking the input fields are valid or not
 
-  getusername(data:string)
-  {
 
-    this.username = data;
-    this.getButtonValidate();
+
+//login validators
+  loginform = new FormGroup({
+
+    username:new FormControl('',[Validators.required,Validators.email]),
+    password:new FormControl('',[Validators.required]),
+    dcode:new FormControl('',[Validators.required,Validators.nullValidator])
+  })
+
+//return the form data
+  login(){
     
+    
+    //user form information
+    let userDataFromTheForm = this.loginform.value;
+
+    //user data from the employee.json
+    const userOriginalInformation = data;
+
+
+    console.log(this.loginform.value);
+
+    console.log(userOriginalInformation);
+    
+    //performing the validations
+
+    data.Employee.forEach(e=>{
+
+      //first checking the username
+      if(e.Username == userDataFromTheForm.username)
+      {
+        //if username is correct then check for the password
+        if(e.Password == userDataFromTheForm.password)
+        {
+          //if password is correct then go for the dealer code
+
+          if(e.Dcode == userDataFromTheForm.dcode)
+          {
+            //then redirect to the Welcome page
+            this.error =false;
+            
+            this.errorMessage = null;
+
+            console.log("Welcome user ",e.Name);
+            
+
+
+
+          }else{
+            //incorrect dcode
+            this.error =true;
+            this.errorMessage = "Invalid Credential"
+          }
+
+
+        }else{
+          //incorrect password
+          this.error =true;
+          this.errorMessage = "Invalid Credential"
+        }
+
+      }else{
+        //incorrect username
+        this.error =true;
+        this.errorMessage = "Invalid Credential"
+
+
+      }
+
+
+    })
+    
+
     
   }
 
-  getpassword(data:string)
-  {  
-    this.password = data;
-    this.getButtonValidate();
 
+  //writing some validator
+
+  get username(){
+    return this.loginform.get('username')
   }
 
- getdcode(data:string)
-  {  
-    this.dcode = data;
-    this.getButtonValidate();
-
+  get password(){
+    return this.loginform.get('password')
   }
 
-
-  //function for cheking the 
-  getButtonValidate()
-  {
-    if(this.username.trim() == "" && this.password.trim() == "" && this.dcode.trim() == "")
-    {
-      this.disabled = true
-
-      
-    }else{
-      this.disabled = false
-    
-      
-     
-    }
-  }
-  //for the form data getting 
-  getFormData(data:NgForm)
-  {
-    
-    //first chek the input filed are empty or not if not empty make the button enable
-
-
-
-    console.log(data);
-
-    
-   
+  get dcode(){
+    return this.loginform.get('dcode');
   }
 }
