@@ -1,0 +1,28 @@
+<div class="container mt-3 shadow-lg border border-bottom" style="width:400px">
+
+    <form #basic="ngForm"    (ngSubmit) = "getFormData(basic.value)" >
+
+      <div class="container mx-auto " >
+        <label for="username">User Name</label>
+        <input type="text" name="username" id="username" ngModel  class="form-control" #username (blur)="getusername(username.value)">
+      </div>
+
+
+      <div class="container">
+        <label for="Password">Password</label>
+        <input type="password" name="password" id="Password" ngModel  class="form-control" #password (blur)="getpassword(password.value)">
+      </div>
+
+
+      <div class="container">
+        <label for="dcode">Dealer Code</label>
+        <input type="text" name="dcode" id="dcode" ngModel  class="form-control" #dcode (blur)="getdcode(dcode.value)">
+      </div>
+
+
+<input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="disabled">
+
+    </form>
+
+
+</div>
