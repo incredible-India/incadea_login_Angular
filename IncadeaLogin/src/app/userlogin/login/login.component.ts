@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 
@@ -14,9 +14,12 @@ import data from  "../../../assets/Employee.json";
 
 export class LoginComponent {
 
+  constructor(){
+    localStorage.clear();
+  }
+
   error:boolean = false;
   errorMessage:string | null = null; 
-
 
 
 
@@ -30,8 +33,8 @@ export class LoginComponent {
 
 //return the form data
   login(){
-    
-    
+    //clear the local storage
+  
     //user form information
     let userDataFromTheForm = this.loginform.value;
 
@@ -59,16 +62,17 @@ export class LoginComponent {
           {
             //then redirect to the Welcome page
             this.error =false;
-            
+
             this.errorMessage = null;
-
-            console.log("Welcome user ",e.Name);
-            
-
+            //for authentication...
+            localStorage.setItem('dcode',e.Dcode);
+            //redirect to the other welcome page
+            document.location.href = `/user/${e.Dcode}`;
 
 
           }else{
             //incorrect dcode
+          
             this.error =true;
             this.errorMessage = "Invalid Credential"
           }

@@ -3,7 +3,7 @@
     <form   [formGroup]="loginform" (ngSubmit) = "login()"  >
       
       <!-- if user got any error  -->
-{{error}}
+
       <p class="text-danger" *ngIf="error"><b>{{errorMessage}}</b></p>
 
 
@@ -29,7 +29,7 @@
       </div>
 
 
-<input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="loginform.invalid">
+<input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="loginform.invalid"  >
 
     </form>
 
