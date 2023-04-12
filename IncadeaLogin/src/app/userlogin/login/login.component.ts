@@ -14,8 +14,11 @@ import data from  "../../../assets/Employee.json";
 
 export class LoginComponent {
 
+//for the two way binding
+nameBinding:string ="";
+ 
   constructor(){
-    localStorage.clear();
+
   }
 
   error:boolean = false;
@@ -36,68 +39,117 @@ export class LoginComponent {
     //clear the local storage
   
     //user form information
-    let userDataFromTheForm = this.loginform.value;
+    let userDataFromTheForm = this.loginform;
 
     //user data from the employee.json
-    const userOriginalInformation = data;
+    const userinfo = this.loginform.value;
+    let x=0;
+    let len = localStorage.length;
 
-
-    console.log(this.loginform.value);
-
-    console.log(userOriginalInformation);
-    
-    //performing the validations
-
-    data.Employee.forEach(e=>{
-
-      //first checking the username
-      if(e.Username == userDataFromTheForm.username)
+    for(x;x<len;x++)
+    {
+      const user = localStorage.getItem(`username${x+1}`)
+  
+      if(user != null)
+      {
+        const cu = JSON.parse(user);
+  
+        // first checking the username
+      if(cu.useremail == userinfo.username)
       {
         //if username is correct then check for the password
-        if(e.Password == userDataFromTheForm.password)
+        if(cu.userpassword == userinfo.password)
         {
           //if password is correct then go for the dealer code
-
-          if(e.Dcode == userDataFromTheForm.dcode)
+  
+          if(cu.dcode == userinfo.dcode)
           {
             //then redirect to the Welcome page
             this.error =false;
-
+  
             this.errorMessage = null;
+  
+            userDataFromTheForm.reset();
+  
+            
             //for authentication...
-            localStorage.setItem('dcode',e.Dcode);
+            sessionStorage.setItem('isauth',`${cu.dcode}`)
             //redirect to the other welcome page
-            document.location.href = `/user/${e.Dcode}`;
-
-
-          }else{
-            //incorrect dcode
-          
-            this.error =true;
-            this.errorMessage = "Invalid Credential"
-          }
-
-
-        }else{
-          //incorrect password
-          this.error =true;
-          this.errorMessage = "Invalid Credential"
-        }
-
-      }else{
-        //incorrect username
-        this.error =true;
-        this.errorMessage = "Invalid Credential"
-
-
+            document.location.href = `/user/${x+1}/${userinfo.dcode}`;
+  
+  
+           } 
+  
+         }
+  
       }
-
-
-    })
-    
-
-    
+  
+      }
+  
+    }
+    this.error =true;
+        this.errorMessage = "Invalid Credential"
+  
+   
+  
+      
+  
   }
+  
+    
+    
+    //performing the validations
+
+    // data.Employee.forEach(e=>{
+
+    //   //first checking the username
+    //   if(e.Username == userDataFromTheForm.username)
+    //   {
+    //     //if username is correct then check for the password
+    //     if(e.Password == userDataFromTheForm.password)
+    //     {
+    //       //if password is correct then go for the dealer code
+
+    //       if(e.Dcode == userDataFromTheForm.dcode)
+    //       {
+    //         //then redirect to the Welcome page
+    //         this.error =false;
+
+    //         this.errorMessage = null;
+    //         //for authentication...
+    //         localStorage.setItem('dcode',e.Dcode);
+    //         //redirect to the other welcome page
+    //         document.location.href = `/user/${e.Dcode}`;
+
+
+    //       }else{
+    //         //incorrect dcode
+          
+    //         this.error =true;
+    //         this.errorMessage = "Invalid Credential"
+    //       }
+
+
+    //     }else{
+    //       //incorrect password
+    //       this.error =true;
+    //       this.errorMessage = "Invalid Credential"
+    //     }
+
+    //   }else{
+    //     //incorrect username
+    //     this.error =true;
+    //     this.errorMessage = "Invalid Credential"
+
+
+    //   }
+
+
+    // })
+    
+
+    
+  
 
 
   //writing some validator
@@ -114,3 +166,7 @@ export class LoginComponent {
     return this.loginform.get('dcode');
   }
 }
+
+
+//showing that name (two way binding ) to other component
+

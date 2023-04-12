@@ -1,5 +1,6 @@
 import { Component ,OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router"
+import { RouterOutlet,RouterModule } from '@angular/router';
 //geeting the json file 
 import data from  "../../assets/Employee.json";
 
@@ -8,45 +9,73 @@ import data from  "../../assets/Employee.json";
   selector: 'app-welocome',
   template: `
     <h1>
-     {{name}}
+ {{name}} Your Dealer ID is {{did}} 
+ 
 </h1>
+<a href='/logout'>
+
+     Logout
+
+     </a>
+
   `,
   styles: [
   ]
 })
 export class WelocomeComponent {
    name:any;
+   did:any;
   constructor(private route:ActivatedRoute){
+
+
+if (sessionStorage.getItem('isauth') == null) {
+  
+  //send back to the login page
+  document.location.href = "";
+
+}
 
   }
 
+
+ 
+
   ngOnInit() : void{
     let id = this.route.snapshot.paramMap.get('dcode');
+    let usernumber = this.route.snapshot.paramMap.get('usernumber');
+  
+    //chceking th eusername in local storage key
 
-    //now finding the data on the basis of id if user is authenticated
-    if(localStorage.getItem('dcode') )
+    if (usernumber == null)
     {
-     //checking the current user id
+      usernumber = " ";
+    }
 
-     if(localStorage.getItem('dcode')==id)
-     {
-      data.Employee.forEach(e=>{
-        if(e.Dcode == id)
-        {
-          this.name = "Welcome To the Incadea, Mr " + e.Name;
-        }
-      })
+    let user = localStorage.getItem(`username${usernumber}`)
+    //coz localstoarage always take string 
+    if(user !=null)
+    {
 
-     }else{
-      //current user d did not matched with that
-      this.name = "You are not Authenticated..";
-     }
+      const userinfo = JSON.parse(user); // parse the user string to a user object
 
+      if(userinfo.dcode == id && sessionStorage.getItem('isauth')==id)
+      {
+        this.name = "Welcome To the Incadea, Mr " + userinfo.username;
+        this.did = id;
+      }else{
+        //if dcode not matched
+        this.name = "You are not Authenticated..";
+      }
+
+   
+//if user number not matched
 
     }else{
-      //user is not authorised 
       this.name = "You are not Authenticated..";
     }
+  
+
+   
  
   }
 }

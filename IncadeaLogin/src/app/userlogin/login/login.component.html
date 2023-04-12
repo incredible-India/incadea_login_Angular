@@ -1,3 +1,5 @@
+
+<app-inc-header [name]="nameBinding" ></app-inc-header>
 <div class="container mt-3 shadow-lg border border-bottom" style="width:400px">
 
     <form   [formGroup]="loginform" (ngSubmit) = "login()"  >
@@ -7,10 +9,9 @@
       <p class="text-danger" *ngIf="error"><b>{{errorMessage}}</b></p>
 
 
-
       <div class="container mx-auto " >
         <label for="username">User Name</label>
-        <input type="text"  class="form-control"  formControlName="username" >
+        <input type="text"  class="form-control"  formControlName="username"  [(ngModel)]="nameBinding" >
         <span class="text-danger" *ngIf="username && username.invalid && username.touched" >Invalid User Name</span>
       </div>
 
@@ -30,7 +31,7 @@
 
 
 <input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="loginform.invalid"  >
-
+<a class=" mx-2 btn btn-success mb-4 mt-4"  routerLink="/signup" >Sign Up</a>
     </form>
 
 

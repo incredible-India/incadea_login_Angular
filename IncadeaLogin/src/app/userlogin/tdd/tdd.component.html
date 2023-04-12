@@ -1,0 +1,46 @@
+<!-- header information  -->
+
+<app-inc-header [name]="name"></app-inc-header>
+
+
+<div class="container mt-3 shadow-lg border border-bottom" style="width:400px">
+
+    <form   (ngSubmit)="loginForm(formdata)" #formdata="ngForm" >
+      
+      <!-- if user got any error  -->
+
+      <p class="text-danger" *ngIf="error"><b>{{errorMessage}}</b></p>
+
+
+
+      <div class="container mx-auto " >
+        <label for="username">User Name</label>
+        <input type="email"  class="form-control"  name="username"  [(ngModel)]="name" required email>
+        <!-- //latar remove -->
+        <p>{{name}}</p>
+             <span class="text-danger" *ngIf="!formdata.controls['username'].valid && formdata.form.controls['username'] && formdata.form.controls['username'].touched">Please Enter the Valid username</span>
+      </div>
+
+
+      <div class="container">
+        <label for="Password">Password</label>
+        <input type="password"   class="form-control" name="password" ngModel required>
+        <span class="text-danger" *ngIf="!formdata.form.controls['password'].valid && formdata.form.controls['password'] && formdata.form.controls['password'].touched">Please Enter the Valid password</span>
+      </div>
+
+
+      <div class="container">
+        <label for="dcode">Dealer Code</label>
+        <input type="text"   class="form-control" name="dcode" ngModel required>
+        <span class="text-danger" *ngIf="!formdata.form.controls['dcode'].valid && formdata.form.controls['dcode'] && formdata.form.controls['dcode'].touched">Please Enter the Valid Dealer Code</span>
+      </div>
+
+
+<input type="submit" value="Validate" class=" mx-4 btn btn-primary mb-4 mt-4" [disabled]="!formdata.valid" >
+<a class=" mx-2 btn btn-success mb-4 mt-4"  routerLink="signup">Sign Up</a>
+
+    </form>
+
+
+</div>
+<router-outlet></router-outlet>
